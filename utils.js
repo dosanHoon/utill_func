@@ -1,4 +1,4 @@
-var utils = {
+var common_utils = {
 
     //jQuery ajax common setup
     ajaxGlobalSetup: function() {
