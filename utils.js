@@ -1,17 +1,21 @@
 var common_utils = {
 
     //jQuery ajax common setup
-    ajaxGlobalSetup: function() {
+    ajaxGlobalSetup: function () {
         $.ajaxSetup({
             headers: {},
-            error: function(e) {
+            error: function (e) {
 
             }
         });
     },
 
+    getObjectLength: function (object) {
+        return Object.keys(object).length;
+    },
+    
     //return object by url queryString
-    parserQueryString: function() {
+    parserQueryString: function () {
         var json = {};
         var checkstr = "?"
         var idx = location.href.indexOf(checkstr);
@@ -35,10 +39,10 @@ var common_utils = {
     },
 
     //data parsing for selectbox react component
-    parseValueForSelectBox: function(prevArr, pValue, pName) {
+    parseValueForSelectBox: function (prevArr, pValue, pName) {
         var parseArr = []
         if (prevArr) {
-            prevArr.map(function(value) {
+            prevArr.map(function (value) {
                 var newObj = {};
                 newObj.value = value[pValue];
                 newObj.name = value[pName];
@@ -51,7 +55,7 @@ var common_utils = {
     /**
      * params를 QueryString으로 반환 해준다.
      */
-    requestBuildQueryString: function(params) {
+    requestBuildQueryString: function (params) {
         var queryString = [];
         for (var property in params)
             if (params.hasOwnProperty(property)) {
@@ -65,7 +69,7 @@ var common_utils = {
     /*
      * 게시물 new 체크
      */
-    isToday: function(date) {
+    isToday: function (date) {
         var isToday = false;
         if (date == "" || date == undefined || date == null) {
             return false
@@ -86,7 +90,7 @@ var common_utils = {
     },
 
     //check date after present
-    futureTime: function(date) {
+    futureTime: function (date) {
         if (date) {
             var endDateTime = [],
                 today, sec, dueDay, dueHour;
@@ -104,7 +108,7 @@ var common_utils = {
         }
     },
 
-    getDateByForm: function(date) {
+    getDateByForm: function (date) {
         if (Boolean(date) == false) {
             return Boolean(date);
         }
@@ -117,11 +121,11 @@ var common_utils = {
         return year + "." + month + "." + day
     },
 
-    getDateByEventForm: function(startDate, endDate) {
+    getDateByEventForm: function (startDate, endDate) {
         return this.getDateByForm(startDate) + " ~ " + this.getDateByForm(endDate)
     },
 
-    is_ie: function() {
+    is_ie: function () {
         if (navigator.userAgent.toLowerCase().indexOf("chrome") != -1) return false;
         if (navigator.userAgent.toLowerCase().indexOf("msie") != -1) return true;
         if (navigator.userAgent.toLowerCase().indexOf("windows nt") != -1) return true;
@@ -133,9 +137,9 @@ var common_utils = {
      * codeGroup : 해당 코드 의 목록 정보
      * cafecode : 검사할 코드 그룹
      */
-    getCodeName: function(codeGroup, code) {
+    getCodeName: function (codeGroup, code) {
         var codeName = "";
-        jQuery.each(codeGroup, function(key, val) {
+        jQuery.each(codeGroup, function (key, val) {
             if (key == code) {
                 codeName = val;
                 return codeName;
@@ -144,13 +148,13 @@ var common_utils = {
         return codeName;
     },
 
-    getCodeGroupList: function(allGroupList, codeGroupID) {
-        jQuery.each(allGroupList, function(key, val) {
+    getCodeGroupList: function (allGroupList, codeGroupID) {
+        jQuery.each(allGroupList, function (key, val) {
 
         });
     },
 
-    andiosCheck: function() {
+    andiosCheck: function () {
         var ua = navigator.userAgent.toLowerCase();
         if (ua.search("android") > -1) {
             return "android"
@@ -159,22 +163,22 @@ var common_utils = {
         }
     },
 
-    boardContentsRex: function(str) {
+    boardContentsRex: function (str) {
         var rex = /<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>|<iframe.+?<\/iframe>/ig
         var boardContentsStr = str
         return boardContentsStr.replace(rex, "");
     },
 
-    onlyCharNumRex: function(str) {
+    onlyCharNumRex: function (str) {
         var rex = /[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9)]/ig
         return rex.test(str);
     },
 
-    numberWithCommas: function(number) {
+    numberWithCommas: function (number) {
         return number ? number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : ""
     },
 
-    currentPath: function() {
+    currentPath: function () {
         var location, locationStrArr;
 
         location = document.location.pathname
@@ -184,7 +188,7 @@ var common_utils = {
         return location
     },
 
-    currentUrl: function() {
+    currentUrl: function () {
         var location
 
         //window.location.origin 이 ie11부터 있네
@@ -198,7 +202,7 @@ var common_utils = {
         return location
     },
 
-    checkImg: function(value) {
+    checkImg: function (value) {
 
         var IMG_FORMAT = "\.(bmp|gif|jpg|jpeg|png)$";
 
@@ -208,7 +212,7 @@ var common_utils = {
 
     },
 
-    nullStringAlert: function(target, str) {
+    nullStringAlert: function (target, str) {
         alerObj = {
             "alertPop": false,
             "alertTitle": "",
@@ -221,14 +225,14 @@ var common_utils = {
         return alerObj;
     },
 
-    isYoutube: function(data) {
+    isYoutube: function (data) {
         return data && data.indexOf('youtube') > 0 ? true : false
     },
 
-    ajaxForm: function(ajaxObj) {
+    ajaxForm: function (ajaxObj) {
 
         if (!ajaxObj.errorFunc) {
-            ajaxObj.errorFunc = function(xhr, status, err) {
+            ajaxObj.errorFunc = function (xhr, status, err) {
                 alert("서버간 통신오류가 발생하였습니다.")
             }
         }
@@ -242,7 +246,7 @@ var common_utils = {
         });
     },
 
-    getCookie: function(cName) {
+    getCookie: function (cName) {
         cName = cName + '=';
         var cookieData = document.cookie;
         var start = cookieData.indexOf(cName);
@@ -257,7 +261,7 @@ var common_utils = {
         return unescape(cValue);
     },
 
-    setCookie: function(c_name, value, exdays, path) {
+    setCookie: function (c_name, value, exdays, path) {
         var exdate = new Date();
         exdate.setDate(exdate.getDate() + exdays);
         var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString()) +
@@ -266,15 +270,15 @@ var common_utils = {
 
     },
 
-    setStateForAlert: function(alertObj, _this, returnurl) {
+    setStateForAlert: function (alertObj, _this, returnurl) {
         alertObj.alertPop = true
-        alertObj.closeCallBack = function() { _this.setState({ alertPop: false }) }
+        alertObj.closeCallBack = function () { _this.setState({ alertPop: false }) }
         alertObj.redirectUrl = returnurl ? returnurl : ""
 
         _this.setState(alertObj)
     },
 
-    getYoutubeId: function(youtubeUrl) {
+    getYoutubeId: function (youtubeUrl) {
         var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
         var matchs = youtubeUrl.match(regExp);
         if (matchs) {
@@ -283,9 +287,9 @@ var common_utils = {
     },
 
     //ie10에서 iframe z-index ignore 해결
-    iframeZindex: function() {
+    iframeZindex: function () {
         //ie10에서 iframe z-index ignore 해결
-        $("iframe").each(function() {
+        $("iframe").each(function () {
             var ifr_source = $(this).attr('src');
             var wmode = "wmode=transparent";
             if (ifr_source.indexOf('?') != -1) {
@@ -297,13 +301,13 @@ var common_utils = {
         });
     },
 
-    setYoutube: function() {
+    setYoutube: function () {
         var youtube = [],
             y_load = 0;
 
         //youtube apu load 체크
-        if (typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined') {
-            window.onYouTubePlayerAPIReady = function() {
+        if (typeof (YT) == 'undefined' || typeof (YT.Player) == 'undefined') {
+            window.onYouTubePlayerAPIReady = function () {
                 loadPlayer();
             };
             $.getScript('//www.youtube.com/player_api');
@@ -314,7 +318,7 @@ var common_utils = {
         //youtube 객체 생성
         function loadPlayer() {
             var hasVideo = $('.swiper-slide .video-container').filter('[youtube-id]');
-            hasVideo.each(function(index) {
+            hasVideo.each(function (index) {
                 var videoid = $(this).attr('id'),
                     youtubeurl = $(this).attr('youtube-id');
 
